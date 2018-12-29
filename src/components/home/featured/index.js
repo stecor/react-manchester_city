@@ -1,9 +1,11 @@
 import React from 'react';
-import Stripes from './Stripes'
+import Stripes from './Stripes';
+import Text from './Text';
 
 const Featured = () => (
   <div className="featured_wrapper">
     <Stripes/>
+    <Text/>
   </div>
 );
 

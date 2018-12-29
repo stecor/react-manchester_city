@@ -44,9 +44,9 @@ showStripes = () => {
                             top:[stripe.top],
                             timing: {delay:stripe.delay, duration: 200, ease: easePolyOut},
                             events:{
-                              end(){
-                                console.log('animation finished');
-                              }
+                            //  end(){
+                            //    console.log('animation finished');
+                            //  }
                             }
                           }}>
                     {({opacity,left,rotate,top,background}) => {
