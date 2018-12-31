@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Fade from 'react-reveal/Fade';
-import FormField from '../../ui/formFields'
+import FormField from '../../ui/formFields';
+import { validate } from '../../ui/misc';
 
 class Enroll extends Component {
 
@@ -17,7 +18,8 @@ class Enroll extends Component {
           placeholder: 'enter your email'
         },
         validation:{
-          required: true
+          required: true,
+          email: true,
         },
         valid:false,
         validationMessage:''
@@ -26,10 +28,20 @@ class Enroll extends Component {
   }
 
   updateForm(element){
+
     const newFormData = {...this.state.formdata}
     const newElement = {...newFormData[element.id]}
 
     newElement.value = element.event.target.value;
+
+    let valiData = validate(newElement);
+
+    newElement.valid =valiData[0];
+    newElement.validationMessage = valiData[1];
+
+    console.log(newFormData);
+
+
     newFormData[element.id] = newElement;
 
     this.setState({
@@ -37,7 +49,21 @@ class Enroll extends Component {
     })
   }
 
-  submitForm(){
+  submitForm(event){
+      event.preventDefault();
+
+      let dataToSubmit = {};
+      let formIsValid = true;
+
+    for(let key in this.state.formdata ){
+      dataToSubmit[key] = this.state.formdata[key].value;
+      formIsValid = this.state.formdata[key].valid && formIsValid;
+    }
+    if(formIsValid){
+      console.log(dataToSubmit);
+    }else {
+      console.log('error');
+    }
 
   }
 
@@ -55,6 +81,7 @@ class Enroll extends Component {
                     formdata={this.state.formdata.email}
                     change={(element)=>this.updateForm(element)}
                 />
+              <button onClick={(event)=>this.submitForm(event)}>Enroll</button>
               </div>
           </form>
         </div>
