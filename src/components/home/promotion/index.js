@@ -1,6 +1,6 @@
 import React from 'react';
 import PromotionAnimation from './Animation';
-import Enroll from './enroll';
+import Enroll from './Enroll';
 
 const Promotion = () => (
     <div
