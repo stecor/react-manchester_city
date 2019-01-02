@@ -8,8 +8,8 @@ const Routes = (props) =>{
   return(
     <Layout>
       <Switch>
+        <Route  exact path="/" component={Home} />
         <Route   path="/sign_in" component={SignIn} />
-        <Route   path="/" component={Home} />
       </Switch>
     </Layout>
   )
