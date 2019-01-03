@@ -96,6 +96,7 @@ class AddEditPlayers extends Component {
     }
   }
 
+
   updateForm(element, content=''){
 
     const newFormData = {...this.state.formdata}
@@ -121,16 +122,66 @@ class AddEditPlayers extends Component {
     })
   }
 
+  updateFields = (player, playerId, formType, defaultImg) =>{
+
+    const newFormData = {...this.state.formdata}
+
+
+    for(let key in newFormData){
+      newFormData[key].value = player[key];
+      newFormData[key].valid = true;
+    }
+    this.setState({
+      playerId,
+      defaultImg,
+      formType,
+      formData: newFormData,
+    })
+  }
+
   componentDidMount(){
+
     const playerId = this.props.match.params.id;
 
     if(!playerId){
-      this.setState({
-        formType:'Add player'
-      })
+
+        this.setState({
+          formType:'Add player'
+        });
+
     }else{
 
+        firebaseDB.ref(`players/${playerId}`)
+          .once('value')
+          .then((snapshot)=>{
+
+            const playerData = snapshot.val();
+
+            firebase.storage().ref('players')
+              .child(playerData.image)
+              .getDownloadURL()
+              .then((url)=>{
+                this.updateFields(playerData,playerId,'Edit player', url)
+              }).catch((e)=>{
+                  this.updateFields({...playerData,image:''},playerId,'Edit player', '')
+              })
+          })
     }
+  }
+
+
+  successForm = (message) =>{
+    this.setState({
+      formSuccess: message,
+    });
+
+    setTimeout(()=>{
+
+      this.setState({
+        formSuccess: '',
+      });
+
+    },2000)
   }
 
 
@@ -145,12 +196,18 @@ class AddEditPlayers extends Component {
       formIsValid = this.state.formdata[key].valid && formIsValid;
     }
 
-
-
     if(formIsValid){
       //submit form
       if(this.state.formType === 'Edit player'){
-
+          firebaseDB.ref(`players/${this.state.playerId}`)
+            .update(dataToSubmit)
+            .then(()=>{
+              this.successForm('Correctly updated')
+            }).catch((e)=>{
+              this.setState({
+                formError: true,
+              })
+            })
       }else{
         firebasePlayers.push(dataToSubmit).then(()=>{
           this.props.history.push("/admin_players")
@@ -175,9 +232,11 @@ class AddEditPlayers extends Component {
       })
   }
 
+
   storeFileName=(fileName)=>{
       this.updateForm({id:'image'}, fileName)
   }
+
 
   render() {
 
