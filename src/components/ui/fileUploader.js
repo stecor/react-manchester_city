@@ -35,6 +35,7 @@ class Fileuploader extends Component {
         .then((url)=>{
           this.setState({fileURL: url})
         })
+        this.props.filename(fileName)
   }
 
   static getDerivedStateFromProps(props,state){
@@ -47,6 +48,15 @@ class Fileuploader extends Component {
     return null
   }
 
+  uploadAgain = ()=>{
+    this.setState({
+      name:'',
+      isUploading:false,
+      fileURL:''
+    });
+    this.props.resetImage();
+  }
+
   render() {
     return (
       <div>
@@ -54,6 +64,7 @@ class Fileuploader extends Component {
           !this.state.fileURL?
             <div>
               <div className="label_inputs">{this.props.tag}</div>
+
               <FileUploader
                   accept="image/*"
                   name ="image"
@@ -63,6 +74,7 @@ class Fileuploader extends Component {
                   onUploadError={ this.handleUploadError}
                   onUploadSuccess={ this.handleUploadSuccess }
                 />
+
             </div>
           :null
         }
