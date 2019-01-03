@@ -155,7 +155,7 @@ class AddEditPlayers extends Component {
   }
 
   storeFileName=()=>{
-    
+
   }
 
   render() {
@@ -169,7 +169,7 @@ class AddEditPlayers extends Component {
             <form onSubmit={(event)=> this.submitForm(event)}>
 
             <FileUploader
-              dir='players'
+              dir = "players"
               tag={"Player image"}
               defaultImg ={this.state.defaultImg}
               defaultImgName = {this.state.formdata.image.value}
