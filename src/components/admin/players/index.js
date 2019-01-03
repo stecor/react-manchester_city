@@ -38,8 +38,6 @@ class AdminPlayers extends Component {
 
   render() {
 
-      console.log(this.state);
-
     return (
       <AdminLayout>
         <div>
@@ -60,12 +58,12 @@ class AdminPlayers extends Component {
 
                         <TableRow key={i}>
                             <TableCell>
-                            <Link to={`/admin_players/add_players/${player.id}`} style={{color:'#98c5e9'}}>
+                            <Link to={`/admin_players/add_player/${player.id}`} style={{color:'#98c5e9'}}>
                               {player.name}
                             </Link>
                             </TableCell>
                             <TableCell>
-                            <Link to={`/admin_players/add_players/${player.id}`} style={{color:'#98c5e9'}}>
+                            <Link to={`/admin_players/add_player/${player.id}`} style={{color:'#98c5e9'}}>
                               {player.lastname}
                             </Link>
                             </TableCell>
