@@ -49,11 +49,13 @@ class Fileuploader extends Component {
   }
 
   uploadAgain = ()=>{
+
     this.setState({
       name:'',
       isUploading:false,
-      fileURL:''
+      fileURL:'',
     });
+
     this.props.resetImage();
   }
 

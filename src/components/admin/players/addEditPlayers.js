@@ -186,6 +186,7 @@ class AddEditPlayers extends Component {
 
 
   submitForm(event){
+
       event.preventDefault();
 
       let dataToSubmit = {};
@@ -199,6 +200,7 @@ class AddEditPlayers extends Component {
     if(formIsValid){
       //submit form
       if(this.state.formType === 'Edit player'){
+
           firebaseDB.ref(`players/${this.state.playerId}`)
             .update(dataToSubmit)
             .then(()=>{
@@ -208,6 +210,7 @@ class AddEditPlayers extends Component {
                 formError: true,
               })
             })
+
       }else{
         firebasePlayers.push(dataToSubmit).then(()=>{
           this.props.history.push("/admin_players")
@@ -222,13 +225,17 @@ class AddEditPlayers extends Component {
     }
   }
 
-  resetImage=()=>{
-      const newformdata = {...this.state.formdata}
-      newformdata['image'].value ='';
-      newformdata['image'].valid = false;
+  resetImage = () =>{
+
+      const newformData = {...this.state.formData}
+
+      newformData['image'].value ='';
+
+      newformData['image'].valid = false;
+
       this.setState({
         defaultImg:'',
-        formdata:newformdata
+        formData : newformData,
       })
   }
 
